@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: log-variable
+# key: logv
+# --
+log.info("XXXX ${1:$(python-args-to-logstring)}", $1)

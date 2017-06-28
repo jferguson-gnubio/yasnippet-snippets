@@ -5,7 +5,7 @@
   "Split a python argument string into ((name, default)..) tuples"
   (mapcar (lambda (x)
              (split-string x "[[:blank:]]*=[[:blank:]]*" t))
-          (split-string arg-string "[[:blank:]]*,[[:blank:]]*" t)))
+          (split-string arg-string "[[:blank:]\n]*,[[:blank:]\n]*" t)))
 
 (defun python-args-to-docstring ()
   "return docstring format for the python arguments in yas-text"
@@ -37,6 +37,14 @@
                        "\nReturns\n-------" formatted-ret)
                  "\n"))))
 
+
+(defun python-args-to-logstring ()
+  "Return logging string format for the python arguments in yas-text."
+  (let* ((args (python-split-args yas-text)))
+    (mapconcat
+     (lambda (x) (concat (nth 0 x) ": %s"))
+     args
+     ", ")))
 
 (add-hook 'python-mode-hook
           '(lambda () (set (make-local-variable 'yas-indent-line) 'fixed)))
